@@ -52,7 +52,6 @@ if __name__ == '__main__':
             except: #If can't then skip the tweet and log the line.
                 logging.error(line)
                 continue
-            #hack
             if 'limit' in tweet_json: # logging rate limit messages and continuing to the next tweet
                 logging.info(line)    
                 continue
