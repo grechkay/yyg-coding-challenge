@@ -17,16 +17,14 @@ if __name__ == '__main__':
 
     #For each combination of two hashtags, the two hashtags are pushed along with the timestamp onto a 
     #priority queue and an edge is added in the graph. If the edge already exists in the priority 
-    #queue, then instead of adding it the timestamp of the existing element is changed and it is not
-    #added nor removed from the graph.
+    #queue, then instead of adding it, the timestamp of the existing element is changed.
 
     #Then the oldest elements from the priority are
     #deleted from the queue until an element is reached which occured within the last 60 seconds; 
-    #subsequently all the expired edges are removed from the graph.
+    #subsequently all the expired edges (and vertices) are removed from the graph.
 
     #The graph class does no error checking and assumes perfect input.
 
-    logging.basicConfig(filename='errors.log',level=logging.DEBUG)
     f = '%a %b %d %H:%M:%S %z %Y'   # This is the pattern to transform the "created_at" field into a datetime object
    
 
@@ -41,6 +39,8 @@ if __name__ == '__main__':
     basedir = os.curdir
     outfile = open(basedir + '/tweet_output/output.txt','w')
     
+    logging.basicConfig(filename=basedir + '/src/logfile.log',level=logging.DEBUG, filemode = 'w')
+   
     with open(basedir + '/tweet_input/tweets.txt','r') as input_file:
         for line in input_file:
             try: # Try to read the JSON line
