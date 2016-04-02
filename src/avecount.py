@@ -26,6 +26,7 @@ class AveCountGraph:
         
         Assumes that the edge does not already exist.
         
+        O(1) average
         """
         if len(self.edge_set[x]) == 0:
             self.num_vertices += 1
@@ -50,6 +51,8 @@ class AveCountGraph:
 
         This method assumes that both x and y exist as vertices and there 
         is an edge between them.
+
+        O(1) average
         """
         self.num_degrees -= 2
         self.edge_set[x].remove(y)
@@ -63,6 +66,7 @@ class AveCountGraph:
     def get_ave(self):
         """
         This method returns the average degree.
+        O(1) average
         """
         if self.num_vertices > 0:
             return 1.0 * self.num_degrees / self.num_vertices 

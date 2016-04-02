@@ -25,6 +25,10 @@ if __name__ == '__main__':
 
     #The graph class does no error checking and assumes perfect input.
 
+    #The average case runtime is O(t + m*log(N)) where m is the total number of hashtag pairs that need to be processed
+    #and N is the maximum number of unique hashtag pairs that occur within a minute window plus one extra tweet,
+    #and t is the total number of tweets.
+
     f = '%a %b %d %H:%M:%S %z %Y'   # This is the pattern to transform the "created_at" field into a datetime object
    
 
@@ -83,9 +87,11 @@ if __name__ == '__main__':
                 # Subsequently the new edges are added to the graph data structure.
                 for elem in combinations(hashtags,2):
                     elem = frozenset(elem)
-                    if elem not in tweet_window.edgehash:
-                        ave_count_graph.add_edge(*elem)
-                    tweet_window.push((tweet_ts,elem))
+                    if elem not in tweet_window.edgehash: # O(1) average
+                        ave_count_graph.add_edge(*elem)   # O(1) average
+                    tweet_window.push((tweet_ts,elem))    # O(log(N)) worst case. In this case N is the number of unique hashtag pairs in the heap including 
+                                                          # the ones derived from the current tweet; this includes all the hashtag pairs that fall into 
+                                                          # the minute window of the timestamp of the latest tweet (as of the previous tweet).
                     
             while True:
                 # Tweets that fall outside the 60 second window are popped off the priority queue one at a time. Their corresponding
@@ -94,12 +100,12 @@ if __name__ == '__main__':
                 # Since the edges that are to be removed are always added first, there is no danger of removing edges that don't exist.
                 if len(tweet_window.heap) == 0:
                     break
-                most_distant = hq.nsmallest(1,tweet_window.heap)[0]
-                if most_distant[0] > window_floor:
+                most_distant = hq.nsmallest(1,tweet_window.heap)[0]     # O(1) worst case
+                if most_distant[0] > window_floor:                      
                     break
                 else:
-                    elem = tweet_window.pop()
-                    ave_count_graph.remove_edge(*elem[1])
+                    elem = tweet_window.pop()                           # O(log(N)) worst case. N here is less than or equal to the N from the push routine.
+                    ave_count_graph.remove_edge(*elem[1])               # O(1) average
 
             ave = ave_count_graph.get_ave() * 100 // 1 / 100.0 # Truncating to 2 decimal points
             k = "{:.2f}".format(ave) # Formatting to 2 decimal point.
