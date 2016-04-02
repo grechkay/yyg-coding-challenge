@@ -15,3 +15,10 @@ that can be found in tweets that are within a
 If hash table lookups are assumed to be constant time
 then the above analysis can be strengthened to worst 
 case running time.
+
+
+All tests are made using random input; the output
+is produced using a naive version of the algorithm
+where after every tweet the graph is reconstructed
+and hashtag pairs that fall out of the 60 second 
+window are deleted.
