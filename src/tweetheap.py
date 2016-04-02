@@ -23,7 +23,7 @@ class TweetHeap:
         Follows the source code for the identical method of the heapq module.
         Adds logic to update the edgehash.
 
-        O(log(n)) worst case
+        O(log(n)) average case  (if assume hash store and lookup is O(1) then O(log(n)) worst case)
         """
         newitem = self.heap[pos]
         while pos > startpos:
@@ -47,8 +47,8 @@ class TweetHeap:
 
         Follows the source code for the identical method of the heapq module.
         Adds logic to update the edgehash.
-
-        O(log(n)) worst case
+        
+        O(log(n)) average case  (if assume hash store and lookup is O(1) then O(log(n)) worst case)
         """
         endpos = len(self.heap)
         startpos = pos
@@ -79,7 +79,7 @@ class TweetHeap:
         Adds logic to update the edgehash and to change the priority when an identical
         element is inserted.
 
-        O(log(n)) worst case
+        O(log(n)) average case  (if assume hash store and lookup is O(1) then O(log(n)) worst case)
         """
         timestamp = item[0]
         key = item[1]
@@ -105,8 +105,8 @@ class TweetHeap:
         function of the heapq module.
 
         Adds logic to update the edgehash.
-
-        O(log(n)) worst case
+        
+        O(log(n)) average case  (if assume hash store and lookup is O(1) then O(log(n)) worst case)
         """
 
         lastelt = self.heap.pop()
