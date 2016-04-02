@@ -51,7 +51,6 @@ class AveCountGraph:
         This method assumes that both x and y exist as vertices and there 
         is an edge between them.
         """
-        edge = frozenset([x,y])
         self.num_degrees -= 2
         self.edge_set[x].remove(y)
         self.edge_set[y].remove(x)
